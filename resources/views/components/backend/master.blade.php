@@ -43,7 +43,7 @@
 
     <x-backend.partials.aside :title="$title" />
 
-    <main id="main" class="main">
+    <main id="main" class="main" style="min-height: calc(100vh - 130px)">
         {{ $slot }}
     </main>
 
