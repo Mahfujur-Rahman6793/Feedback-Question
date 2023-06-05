@@ -28,8 +28,14 @@ class ProfileController extends Controller
     {
         $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // if ($request->user()->isDirty('email')) {
+        //     $request->user()->email_verified_at = null;
+        // }
+
+        if ($request->hasFile('image')) {
+            $request->user()->image()->updateOrCreate([
+                'image' =>  $this->uploadImage($request->file('image'))
+            ]);
         }
 
         $request->user()->save();
@@ -56,5 +62,17 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    private function uploadImage($image)
+    {
+        $originalName = $image->getClientOriginalName();
+        $fileName = date('Y-m-d ') . time() . $originalName;
+        $image->move(storage_path('app/public/users'), $fileName);
+        // Image::make($image)
+        //     ->resize(500, 500)
+        //     ->save(storage_path() . '/app/public/users/' . $fileName);
+
+        return $fileName;
     }
 }
