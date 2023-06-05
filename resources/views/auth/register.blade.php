@@ -1,4 +1,14 @@
 <x-guest-layout>
+    @push('customcss')
+    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    @endpush
+
+    @push('customjs')
+    <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    @endpush
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -7,6 +17,16 @@
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+
+        <div class="mt-3">
+            <x-forms.select name="department" label="Select your department" :options="$departments" :selected="old('department')" required />
+            <x-input-error :messages="$errors->get('department')" class="mt-2" />
+        </div>
+
+        <div class="mt-3">
+            <x-forms.select name="role" label="Select your role" :options="$roles" :selected="old('role')" required />
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
 
         <!-- Email Address -->

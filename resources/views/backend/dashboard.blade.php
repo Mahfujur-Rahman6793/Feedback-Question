@@ -1,13 +1,11 @@
-<x-backend.master title="Dashboard">
-    <div class="pagetitle">
-        <h1>Dashboard</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
+@php
+    $title = __('Dashboard');
+@endphp
+<x-backend.master :title="$title">
+
+    <x-forms.message />
+
+    <x-pages.title :links="[$title]" :title="$title" />
 
     <section class="section dashboard">
         <div class="row">
@@ -19,20 +17,8 @@
                     <!-- Sales Card -->
                     <div class="col-xxl-4 col-md-6">
                         <div class="card info-card sales-card">
-
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                        class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <!-- <li class="dropdown-header text-start">
-                        <h6>Filter</h6>
-                      </li> -->
-                                </ul>
-                            </div>
-
                             <div class="card-body">
-                                <h5 class="card-title">Total-Question</h5>
-
+                                <h5 class="card-title">Total Question</h5>
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-chat-dots"></i>
@@ -42,9 +28,40 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div><!-- End Sales Card -->
+
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Chapter wise questions</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-chat-dots"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>14</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Scenario wise questions</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-chat-dots"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>131</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Teacher Card -->
                     <div class="col-xxl-4 col-md-6">
