@@ -30,12 +30,17 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
     // Users
     Route::prefix('users')->group(function () {
-        Route::get('/', [UserController::class, 'index'])->name('users.index');
-        Route::get('/{user}', [UserController::class, 'show'])->name('users.show');
-        Route::patch('/{user}/approve', [UserController::class, 'approve'])->name('users.approve');
-        Route::patch('/{user}/disapprove', [UserController::class, 'disapprove'])->name('users.disapprove');
-        Route::get('/{user}/change-role', [UserController::class, 'changeRole'])->name('users.change_role');
-        Route::patch('/{user}/change-role', [UserController::class, 'updateRole'])->name('users.update_role');
+        Route::middleware(['role:admin,chairman'])->group(function() {
+            Route::get('/', [UserController::class, 'index'])->name('users.index');
+            Route::get('/{user}', [UserController::class, 'show'])->name('users.show');
+            Route::patch('/{user}/approve', [UserController::class, 'approve'])->name('users.approve');
+            Route::patch('/{user}/disapprove', [UserController::class, 'disapprove'])->name('users.disapprove');
+        });
+
+        Route::middleware(['role:admin'])->group(function() {
+            Route::get('/{user}/change-role', [UserController::class, 'changeRole'])->name('users.change_role');
+            Route::patch('/{user}/change-role', [UserController::class, 'updateRole'])->name('users.update_role');
+        });
     });
 });
 
