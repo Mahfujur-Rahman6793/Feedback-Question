@@ -56,7 +56,7 @@
     <script src="{{ asset('assets/vendor/jquery/jquery.min.js') }}"></script>
     {{-- <script src="assets/vendor/apexcharts/apexcharts.min.js"></script> --}}
 
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     {{-- <script src="assets/vendor/chart.js/chart.umd.js"></script> --}}
     {{-- <script src="assets/vendor/echarts/echarts.min.js"></script> --}}
     {{-- <script src="assets/vendor/quill/quill.min.js"></script> --}}
