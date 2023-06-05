@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'role_id',
         'department_id',
+        'approved_at',
     ];
 
     /**
@@ -43,6 +44,31 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    const TYPE_ADMIN = 1; //'admin';
+    const TYPE_CHAIRMAN = 2; //'chairman';
+    const TYPE_TEACHER = 3; //'teacher';
+    const TYPE_STUDENT = 4; //'student';
+
+    public function isAdmin()
+    {
+        return $this->role_id == User::TYPE_ADMIN;
+    }
+
+    public function isChairman()
+    {
+        return $this->role_id == User::TYPE_CHAIRMAN;
+    }
+
+    public function isTeacher()
+    {
+        return $this->role_id == User::TYPE_TEACHER;
+    }
+
+    public function isStudent()
+    {
+        return $this->role_id == User::TYPE_STUDENT;
+    }
 
     public function role()
     {
