@@ -15,10 +15,16 @@ class UserSeeder extends Seeder
     public function run()
     {
         $users = [
-            'admin@gmail.com' => ['Admin', 1],
-            'chairman@gmail.com' => ['Chairman', 2],
-            'teacher@gmail.com' => ['Teacher', 3],
-            'student@gmail.com' => ['Student', 4],
+            'admin@gmail.com' => ['Admin', 1, 1],
+            'chairman@gmail.com' => ['Chairman', 2, 1],
+            'teacher@gmail.com' => ['Teacher', 3, 1],
+            'teacher2@gmail.com' => ['Teacher 2', 3, 2],
+            'teacher3@gmail.com' => ['Teacher 3', 3, 3],
+            'teacher4@gmail.com' => ['Teacher 4', 3, 4],
+            'student@gmail.com' => ['Student', 4, 1],
+            'student2@gmail.com' => ['Student 2', 4, 2],
+            'student3@gmail.com' => ['Student 3', 4, 3],
+            'student4@gmail.com' => ['Student 4', 4, 4],
         ];
 
         foreach ($users as $email => $data) {
@@ -28,7 +34,7 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => '$2y$10$SmrPjAMwLzUAEcUQi.onE.lCz52fIGOSFUHD1f63n5kXxx2AEwOwK', // 12345678
                 'role_id' => $data[1],
-                'department_id' => 1,
+                'department_id' => $data[2],
             ]);
         }
     }
