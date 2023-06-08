@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\QuestionType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -19,6 +20,9 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             CourseSeeder::class,
             UserSeeder::class,
+            QuestionType::class,
+            Question::class,
+            ScaleSeeder::class,
         ]);
 
         // \App\Models\User::factory(10)->create();
