@@ -62,6 +62,7 @@
             </table>
             <!-- End Table with hoverable rows -->
 
+            {{ $users->links() }}
         </div>
     </div>
 </x-backend.master>

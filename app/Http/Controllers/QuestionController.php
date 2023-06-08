@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
+use App\Models\Course;
 use App\Models\Question;
+use App\Models\QuestionType;
 
 class QuestionController extends Controller
 {
@@ -15,7 +17,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        $questions = Question::where('user_id', auth()->id())->latest()->with(['teacher', 'course', 'questionType'])->paginate(20);
+        return view('backend.questions.index', compact('questions'));
     }
 
     /**
@@ -25,7 +28,9 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        $courses = Course::latest()->pluck('code', 'id')->toArray();
+        $questionTypes = QuestionType::pluck('type', 'id')->toArray();
+        return view('backend.questions.create', compact('courses', 'questionTypes'));
     }
 
     /**
@@ -36,7 +41,14 @@ class QuestionController extends Controller
      */
     public function store(StoreQuestionRequest $request)
     {
-        //
+        Question::create([
+            'user_id' => auth()->id(),
+            'course_id' => $request->course,
+            'question_type_id' => $request->type,
+            'marks' => $request->marks,
+            'name' => $request->name,
+        ]);
+        return redirect()->route('questions.index')->withMessage('Question Added successfully');
     }
 
     /**
@@ -47,7 +59,8 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        // $question = $question->with(['teacher', 'course', 'questionType'])->first();
+        return view('backend.questions.show', compact('question'));
     }
 
     /**
@@ -58,7 +71,10 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        //
+        // $question = $question->with(['teacher', 'course', 'questionType'])->first();
+        $courses = Course::latest()->pluck('code', 'id')->toArray();
+        $questionTypes = QuestionType::pluck('type', 'id')->toArray();
+        return view('backend.questions.edit', compact('question', 'courses', 'questionTypes'));
     }
 
     /**
@@ -70,7 +86,13 @@ class QuestionController extends Controller
      */
     public function update(UpdateQuestionRequest $request, Question $question)
     {
-        //
+        $question->update([
+            'course_id' => $request->course,
+            'question_type_id' => $request->type,
+            'marks' => $request->marks,
+            'name' => $request->name,
+        ]);
+        return redirect()->route('questions.index')->withMessage('Question updated successfully');
     }
 
     /**
@@ -81,6 +103,7 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        $question->delete();
+        return redirect()->route('questions.index')->withMessage('Question deleted successfully');
     }
 }

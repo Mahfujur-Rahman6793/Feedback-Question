@@ -15,13 +15,23 @@
                     <i class="bi bi-person"></i>
                     <span>
                         @if (auth()->user()->isAdmin())
-                        User
+                        Chairman
                         @else
                         Teacher
                         @endif
                     </span>
                 </a>
             </li><!-- End user menu -->
+        @endif
+
+        @if (auth()->user()->isChairman())
+        <!-- Assign Course -->
+        <li class="nav-item">
+            <a class="nav-link @if ($title != 'Assigned Course List') collapsed @endif" href="#">
+                <i class="bi bi-journal-text"></i>
+                <span>Assigned Course</span>
+            </a>
+        </li><!-- End user menu -->
         @endif
 
         <!-- Student -->
@@ -33,20 +43,30 @@
         </li><!-- End Student --> --}}
 
         @if (auth()->user()->isTeacher())
+        @php
+            $isQuestion = false;
+            if (!empty($title)) {
+                $questionTitles = ['Question List', 'View Question', 'Edit Question', 'Add Question'];
+                $generateTitles = ['Generated Question List', 'View Generated Question', 'Create Generated Question'];
+                $isGenQuestion = in_array($title, $generateTitles);
+                $isAddQuestion = in_array($title, $questionTitles);
+                $isQuestion = $isAddQuestion || $isGenQuestion;
+            }
+        @endphp
         <!-- Question -->
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+            <a class="nav-link @if (!$isQuestion) collapsed @endif" data-bs-target="#questions-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-layout-text-window-reverse"></i><span>Question</span><i
                     class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <ul id="questions-nav" class="nav-content collapse @if ($isQuestion) show @endif" data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="#">
+                    <a class="nav-link @if (!$isAddQuestion) collapsed @endif" href="{{ route('questions.index') }}">
                         <i class="bi bi-circle"></i><span>Add</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a class="nav-link @if (!$isGenQuestion) collapsed @endif" href="#">
                         <i class="bi bi-circle"></i><span>Generate</span>
                     </a>
                 </li>
@@ -55,7 +75,7 @@
         <!-- End_Question -->
         @endif
 
-        @if (auth()->user()->isTeacher() || auth()->user()->isChairman())
+        @if (!auth()->user()->isAdmin())
         <!-- Feedback -->
         <li class="nav-item">
             <a class="nav-link @if ($title != 'Feedback') collapsed @endif" href="#">

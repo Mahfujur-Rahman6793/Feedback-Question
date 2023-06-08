@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,11 @@ Route::middleware(['auth', 'verified'])->group(function() {
             Route::get('/{user}/change-role', [UserController::class, 'changeRole'])->name('users.change_role');
             Route::patch('/{user}/change-role', [UserController::class, 'updateRole'])->name('users.update_role');
         });
+    });
+
+    // Question
+    Route::middleware(['role:teacher'])->group(function() {
+        Route::resource('questions', QuestionController::class);
     });
 });
 

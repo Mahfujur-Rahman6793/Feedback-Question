@@ -13,7 +13,7 @@ class StoreQuestionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->user()->isTeacher();
     }
 
     /**
@@ -24,7 +24,10 @@ class StoreQuestionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required'],
+            'marks' => ['required', 'numeric'],
+            'course' => ['required', 'exists:courses,id'],
+            'type' => ['required', 'exists:question_types,id'],
         ];
     }
 }
