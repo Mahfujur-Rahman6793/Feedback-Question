@@ -42,12 +42,12 @@
             <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="#">
-                        <i class="bi bi-circle"></i><span>Generation</span>
+                        <i class="bi bi-circle"></i><span>Add</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <i class="bi bi-circle"></i><span>Add</span>
+                        <i class="bi bi-circle"></i><span>Generate</span>
                     </a>
                 </li>
             </ul>

@@ -33,9 +33,9 @@ class StoreRegisteredUserRequest extends FormRequest
             'department' => ['required', 'exists:departments,id'],
         ];
 
-        if ($this->role == 4) {
+        if ($this->role == User::TYPE_STUDENT) {
             $rules['email'][] = 'ends_with:@student.nstu.edu.bd';
-        } else {
+        } else { // Other role
             $rules['email'][] = 'ends_with:nstu.edu.bd';
         }
 
