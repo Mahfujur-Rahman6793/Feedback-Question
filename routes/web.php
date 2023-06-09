@@ -47,8 +47,14 @@ Route::middleware(['auth', 'verified'])->group(function() {
     });
 
     // Feedback
+    Route::middleware(['role:student'])->group(function() {
+        Route::get('/feedbacks/create', [FeedbackController::class, 'create'])->name('feedbacks.create');
+        Route::post('/feedbacks', [FeedbackController::class, 'store'])->name('feedbacks.store');
+    });
+
     Route::middleware(['role:chairman'])->group(function() {
-        Route::get('/feedbacks', [FeedbackController::class, 'index'])->name('feedbacks.index');
+        // Feedback
+        Route::get('/feedbacks/{user}', [FeedbackController::class, 'show'])->name('feedbacks.show');
 
         Route::get('assigned-courses', [AssignedCourseController::class, 'index'])->name('assigned_courses.index');
         Route::get('assigned-courses/{user}', [AssignedCourseController::class, 'show'])->name('assigned_courses.show');
@@ -63,15 +69,10 @@ Route::middleware(['auth', 'verified'])->group(function() {
     });
 
     // Feedback
-    Route::middleware(['role:student'])->group(function() {
-        Route::get('/feedbacks/create', [FeedbackController::class, 'create'])->name('feedbacks.create');
-        Route::post('/feedbacks', [FeedbackController::class, 'store'])->name('feedbacks.store');
+    Route::middleware(['role:chairman,teacher'])->group(function() {
+        Route::get('/feedbacks', [FeedbackController::class, 'index'])->name('feedbacks.index');
     });
 
-    // Feedback
-    Route::middleware(['role:chairman,teacher'])->group(function() {
-        Route::get('/feedbacks/{feedback}', [FeedbackController::class, 'show'])->name('feedbacks.show');
-    });
 });
 
 require __DIR__.'/auth.php';

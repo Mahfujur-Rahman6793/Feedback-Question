@@ -80,7 +80,7 @@
         @if (($user->isChairman() || $user->isTeacher()) && $user->approved_at)
         <!-- Feedback -->
         <li class="nav-item">
-            <a class="nav-link @if ($title != 'Feedback') collapsed @endif" href="#">
+            <a class="nav-link @if ($title != 'Feedback List' || $title != 'Show Feedback') collapsed @endif" href="{{ route('feedbacks.index') }}">
                 <i class="bi bi-question-circle"></i>
                 <span>Feedback</span>
             </a>
@@ -90,7 +90,7 @@
         @if ($user->isStudent())
         <!-- Add Feedback -->
         <li class="nav-item">
-            <a class="nav-link @if ($title != 'Add Feedback') collapsed @endif" href="#">
+            <a class="nav-link @if ($title != 'Add Feedback') collapsed @endif" href="{{ route('feedbacks.create') }}">
                 <i class="bi bi-question-circle"></i>
                 <span>Add Feedback</span>
             </a>
