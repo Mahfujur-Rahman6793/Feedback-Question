@@ -13,4 +13,9 @@ class Course extends Model
     {
         return $this->belongsTo(Department::class);
     }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(User::class)->withPivot('created_at');
+    }
 }

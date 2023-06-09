@@ -25,9 +25,16 @@
         @endif
 
         @if (auth()->user()->isChairman())
+        @php
+            $isAssignCourse = false;
+            if (!empty($title)) {
+                $assignTitles = ['Assigned Course List', 'View Assigned Course', 'Assign Course'];
+                $isAssignCourse = in_array($title, $assignTitles);
+            }
+        @endphp
         <!-- Assign Course -->
         <li class="nav-item">
-            <a class="nav-link @if ($title != 'Assigned Course List') collapsed @endif" href="#">
+            <a class="nav-link @if (!$isAssignCourse) collapsed @endif" href="{{ route('assigned_courses.index') }}">
                 <i class="bi bi-journal-text"></i>
                 <span>Assigned Course</span>
             </a>
@@ -75,7 +82,7 @@
         <!-- End_Question -->
         @endif
 
-        @if (!auth()->user()->isAdmin())
+        @if (auth()->user()->isChairman() || auth()->user()->isTeacher())
         <!-- Feedback -->
         <li class="nav-item">
             <a class="nav-link @if ($title != 'Feedback') collapsed @endif" href="#">
@@ -83,6 +90,16 @@
                 <span>Feedback</span>
             </a>
         </li><!-- End Feedback -->
+        @endif
+
+        @if (auth()->user()->isStudent())
+        <!-- Add Feedback -->
+        <li class="nav-item">
+            <a class="nav-link @if ($title != 'Add Feedback') collapsed @endif" href="#">
+                <i class="bi bi-question-circle"></i>
+                <span>Add Feedback</span>
+            </a>
+        </li><!-- Add Feedback -->
         @endif
 
     </ul>

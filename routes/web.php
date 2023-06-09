@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AssignedCourseController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UserController;
@@ -44,9 +46,31 @@ Route::middleware(['auth', 'verified'])->group(function() {
         });
     });
 
+    // Feedback
+    Route::middleware(['role:chairman'])->group(function() {
+        Route::get('/feedbacks', [FeedbackController::class, 'index'])->name('feedbacks.index');
+
+        Route::get('assigned-courses', [AssignedCourseController::class, 'index'])->name('assigned_courses.index');
+        Route::get('assigned-courses/{user}', [AssignedCourseController::class, 'show'])->name('assigned_courses.show');
+        Route::get('assigned-courses/{user}/courses/create', [AssignedCourseController::class, 'create'])->name('assigned_courses.create');
+        Route::post('assigned-courses/{user}/courses', [AssignedCourseController::class, 'store'])->name('assigned_courses.store');
+        Route::delete('assigned-courses/{user}/courses/{course}', [AssignedCourseController::class, 'destroy'])->name('assigned_courses.destroy');
+    });
+
     // Question
     Route::middleware(['role:teacher'])->group(function() {
         Route::resource('questions', QuestionController::class);
+    });
+
+    // Feedback
+    Route::middleware(['role:student'])->group(function() {
+        Route::get('/feedbacks/create', [FeedbackController::class, 'create'])->name('feedbacks.create');
+        Route::post('/feedbacks', [FeedbackController::class, 'store'])->name('feedbacks.store');
+    });
+
+    // Feedback
+    Route::middleware(['role:chairman,teacher'])->group(function() {
+        Route::get('/feedbacks/{feedback}', [FeedbackController::class, 'show'])->name('feedbacks.show');
     });
 });
 
