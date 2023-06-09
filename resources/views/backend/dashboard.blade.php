@@ -10,7 +10,7 @@
 
     <section class="section dashboard">
         <div class="row">
-            @if (!$user->approved_at)
+            @if (!$user->approved_at && !auth()->user()->isStudent())
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
@@ -110,6 +110,41 @@
                     </div>
                     @endif
 
+                    @if ($user->isStudent())
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card revenue-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Courses</h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-journal-text"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>64</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card revenue-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Teacher</h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>64</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
                     @if ($user->isAdmin() || $user->isChairman())
                     <div class="col-xxl-4 col-md-6">
                         <div class="card info-card revenue-card">
@@ -159,7 +194,7 @@
                     </div>
 
                     @endif
-                    
+
                 </div>
             </div><!-- End Left side columns -->
             @endif

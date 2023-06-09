@@ -8,12 +8,6 @@
 
     <x-pages.title :links="['dashboard' => __('Dashboard'), $title]" :title="$title" />
 
-    {{-- <div class="row text-end my-3">
-        <div>
-            <a class="btn btn-sm btn-primary" href="{{ route('assigned_courses.create') }}">Create new question</a>
-        </div>
-    </div> --}}
-
     <div class="card">
         <div class="card-body">
             <h5 class="card-title"></h5>
