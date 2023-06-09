@@ -110,7 +110,7 @@
                     </div>
                     @endif
 
-                    @if ($user->isStudent())
+                    @if ($user->isStudent() || $user->isChairman())
                     <div class="col-xxl-4 col-md-6">
                         <div class="card info-card revenue-card">
                             <div class="card-body">
@@ -146,47 +146,29 @@
                     @endif
 
                     @if ($user->isAdmin() || $user->isChairman())
-                    <div class="col-xxl-4 col-md-6">
-                        <div class="card info-card revenue-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Teacher</h5>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-people"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>64</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Request-->
                     <div class="col-12">
                         <div class="card recent-sales overflow-auto">
 
                             <div class="card-body">
-                                <h5 class="card-title">Request</h5>
+                                <h5 class="card-title">Latest Requests</h5>
 
                                 <table class="table table-borderless datatable">
                                     <thead>
                                         <tr>
                                             <th scope="col">Teacher</th>
                                             <th scope="col">E-mail</th>
+                                            <th scope="col">Department</th>
                                             <th scope="col">Approval for</th>
-                                            <th scope="col" class="text-end">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Brandon Jacob</td>
-                                            <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                                            <td>Teacher</td>
-                                            <td><span class="badge bg-success btn ps-2 pe-2">Approved</span></td>
-                                            <td><span class="badge bg-danger btn ps-4 pe-4">Reject</span></td>
-                                        </tr>
+                                        @forelse ([] as $user)
+
+                                        @empty
+                                        <tr><td colspan="4">No latest requests</td></tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>

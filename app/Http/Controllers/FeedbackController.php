@@ -51,7 +51,7 @@ class FeedbackController extends Controller
     public function create()
     {
         $scales = Scale::pluck('title', 'id')->toArray();
-        $teachers = User::where('role_id', User::TYPE_TEACHER)->where('department_id', auth()->user()->department_id)->pluck('name', 'id')->toArray();
+        $teachers = User::where('role_id', User::TYPE_TEACHER)->where('department_id', auth()->user()->department_id)->whereNotNull('approved_at')->pluck('name', 'id')->toArray();
         $courses = Course::where('department_id', auth()->user()->department_id)->orderBy('title')->pluck('title', 'id')->toArray();
         return view('backend.feedbacks.create', compact('scales', 'teachers', 'courses'));
     }

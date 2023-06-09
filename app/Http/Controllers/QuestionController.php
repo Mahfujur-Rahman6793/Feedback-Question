@@ -28,7 +28,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        $courses = Course::latest()->pluck('code', 'id')->toArray();
+        $courses = auth()->user()->courses()->latest('course_user.created_at')->pluck('code', 'id')->toArray();
         $questionTypes = QuestionType::pluck('type', 'id')->toArray();
         return view('backend.questions.create', compact('courses', 'questionTypes'));
     }
