@@ -19,7 +19,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Role</th>
                         <th scope="col">Department</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" width="220px">Action</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -35,6 +35,7 @@ class UserSeeder extends Seeder
                 'password' => '$2y$10$SmrPjAMwLzUAEcUQi.onE.lCz52fIGOSFUHD1f63n5kXxx2AEwOwK', // 12345678
                 'role_id' => $data[1],
                 'department_id' => $data[2],
+                'approved_at' => now(),
             ]);
         }
     }

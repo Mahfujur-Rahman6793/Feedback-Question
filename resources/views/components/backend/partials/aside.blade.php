@@ -1,3 +1,6 @@
+@php
+    $user = auth()->user();
+@endphp
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
@@ -7,14 +10,13 @@
             </a>
         </li><!-- End Dashboard Nav -->
 
-        @if (auth()->user()->isAdmin() ||
-                auth()->user()->isChairman())
+        @if (($user->isAdmin() || $user->isChairman()) && $user->approved_at)
             <!-- User -->
             <li class="nav-item">
                 <a class="nav-link @if ($title != 'User List') collapsed @endif" href="{{ route('users.index') }}">
                     <i class="bi bi-person"></i>
                     <span>
-                        @if (auth()->user()->isAdmin())
+                        @if ($user->isAdmin())
                         Chairman
                         @else
                         Teacher
@@ -24,7 +26,7 @@
             </li><!-- End user menu -->
         @endif
 
-        @if (auth()->user()->isChairman())
+        @if ($user->isChairman() && $user->approved_at)
         @php
             $isAssignCourse = false;
             if (!empty($title)) {
@@ -32,6 +34,7 @@
                 $isAssignCourse = in_array($title, $assignTitles);
             }
         @endphp
+
         <!-- Assign Course -->
         <li class="nav-item">
             <a class="nav-link @if (!$isAssignCourse) collapsed @endif" href="{{ route('assigned_courses.index') }}">
@@ -41,15 +44,7 @@
         </li><!-- End user menu -->
         @endif
 
-        <!-- Student -->
-        {{-- <li class="nav-item">
-            <a class="nav-link collapsed" href="#">
-                <i class="bi bi-question-circle"></i>
-                <span>Student</span>
-            </a>
-        </li><!-- End Student --> --}}
-
-        @if (auth()->user()->isTeacher())
+        @if ($user->isTeacher() && $user->approved_at)
         @php
             $isQuestion = false;
             if (!empty($title)) {
@@ -82,7 +77,7 @@
         <!-- End_Question -->
         @endif
 
-        @if (auth()->user()->isChairman() || auth()->user()->isTeacher())
+        @if (($user->isChairman() || $user->isTeacher()) && $user->approved_at)
         <!-- Feedback -->
         <li class="nav-item">
             <a class="nav-link @if ($title != 'Feedback') collapsed @endif" href="#">
@@ -92,7 +87,7 @@
         </li><!-- End Feedback -->
         @endif
 
-        @if (auth()->user()->isStudent())
+        @if ($user->isStudent())
         <!-- Add Feedback -->
         <li class="nav-item">
             <a class="nav-link @if ($title != 'Add Feedback') collapsed @endif" href="#">

@@ -17,6 +17,7 @@
           </a>
         </li><!-- End Search Icon--> --}}
 
+        {{--
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
@@ -52,6 +53,7 @@
           </ul><!-- End Notification Dropdown Items -->
 
         </li><!-- End Notification Nav -->
+        --}}
 
         <li class="nav-item dropdown pe-3">
 
