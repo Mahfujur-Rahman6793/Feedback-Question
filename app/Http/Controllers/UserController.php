@@ -20,6 +20,8 @@ class UserController extends Controller
         $users = User::query();
         if ($user->isChairman()) {
             $users->where('role_id', 3); // Get only teachers
+        } else if ($user->isAdmin()) {
+            $users->where('role_id', 2); // Get only chairmans
         }
         $users = $users->where('id', '!=', auth()->id())->where('role_id', '!=', 4)->with(['role', 'department'])->latest()->paginate(15);
         return view('backend.users.index', compact('users'));

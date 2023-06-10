@@ -132,7 +132,8 @@ class GenerateQuestionController extends Controller
      */
     public function destroy(GenerateQuestion $generateQuestion)
     {
-        //
+        $generateQuestion->delete();
+        return redirect()->route('generate-questions.index')->withMessage('Deleted successfully');
     }
 
     public function pdf()
