@@ -68,7 +68,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="nav-link @if (!$isGenQuestion) collapsed @endif" href="#">
+                    <a class="nav-link @if (!$isGenQuestion) collapsed @endif" href="{{ route('generate-questions.index') }}">
                         <i class="bi bi-circle"></i><span>Generate</span>
                     </a>
                 </li>

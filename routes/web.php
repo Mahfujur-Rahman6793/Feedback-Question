@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssignedCourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\GenerateQuestionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UserController;
@@ -66,6 +67,9 @@ Route::middleware(['auth', 'verified'])->group(function() {
     // Question
     Route::middleware(['role:teacher'])->group(function() {
         Route::resource('questions', QuestionController::class);
+        Route::resource('generate-questions', GenerateQuestionController::class);
+        Route::post('generate-questions/{generate_question}/pdf', [GenerateQuestionController::class, 'pdf'])->name('generate-questions.pdf');
+        Route::get('random', [GenerateQuestionController::class, 'random'])->name('generate.random');
     });
 
     // Feedback
