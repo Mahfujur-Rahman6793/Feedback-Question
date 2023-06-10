@@ -24,7 +24,7 @@
                         <th scope="col">Duration</th>
                         <th scope="col">Total Marks</th>
                         <th scope="col">Total Questions</th>
-                        <th scope="col" width="190">Action</th>
+                        <th scope="col" width="300">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,7 +39,7 @@
                             @if (auth()->user()->isTeacher())
                             <a class="btn btn-sm btn-info" href="{{ route('generate-questions.show', $question->id) }}">View</a>
                             @if ($question->questions == null)
-                            <a class="btn btn-sm btn-warning" href="{{ route('questions.edit', $question->id) }}">Continue Generating</a>
+                            <a class="btn btn-sm btn-warning" href="{{ route('generate-questions.edit', $question->id) }}">Continue Generating</a>
                             @endif
                             <x-pages.actionDelete :link="route('generate-questions.destroy', $question->id)" />
                             @endif
