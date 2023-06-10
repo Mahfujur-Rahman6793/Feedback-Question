@@ -1,14 +1,16 @@
-@props(['name', 'type', 'label' => '', 'class' => '', 'value' => '', 'containerClass' => 'mb-2', 'disabled' => false])
-
-@if ($containerClass) <div class="{{ $containerClass }}"> @endif
+@props(['name', 'type', 'label' => '', 'class' => '', 'value' => '', 'containerClass' => 'mb-2', 'disabled' => false, 'containerId' => null, 'inputId' => null])
+@php
+    $nameOpt = str_replace("[]", "", $name);
+@endphp
+@if ($containerClass) <div class="{{ $containerClass }}" @if ($containerId) id="{{ $containerId }}" @endif> @endif
     @if ($label)
     <label
-        for="{{ $name }}Input"
+        for="{{ $inputId ?? $nameOpt }}Input"
         class="form-label">{{ $label }}</label>
     @endif
     <input
         type="{{ $type }}"
-        id="{{ $name }}Input"
+        id="{{ $inputId ?? $nameOpt }}Input"
         name="{{ $name }}"
         @if ($value) value="{{ $value }}" @endif
         class="form-control {{ $class }} @error($name) is-invalid @enderror"
