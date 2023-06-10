@@ -4,15 +4,16 @@
 
 <x-backend.master :title="$title">
 
-    <x-forms.message />
+    <x-head.tinymce-config />
 
     <x-pages.title :links="['dashboard' => __('Dashboard'), $title]" :title="$title" />
+    <x-forms.message />
 
     <div class="card">
         <div class="card-body">
             <h5 class="card-title"></h5>
             <x-forms.form :action="route('questions.update', $question->id)" method="PATCH" class="row px-3 py-3">
-                <x-forms.textarea name="name" :label="__('Enter question')" :value="old('name', $question->name)" rows="4" required autofocus/>
+                <x-forms.textarea name="name" :label="__('Enter question')" :value="old('name', $question->name)" rows="4" class="tinymce" required autofocus/>
 
                 <x-forms.input name="marks" type="number" max="10" min="0" step="1" :label="__('Enter question marks')"
                     :value="old('marks', $question->marks)" required />

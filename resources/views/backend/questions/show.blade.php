@@ -4,9 +4,8 @@
 
 <x-backend.master :title="$title">
 
-    <x-forms.message />
-
     <x-pages.title :links="['dashboard' => __('Dashboard'), $title]" :title="$title" />
+    <x-forms.message />
 
     <div class="row text-end my-3">
         <div>
@@ -23,7 +22,7 @@
                 <tbody>
                     <tr>
                         <th scope="col">Question</th>
-                        <td>{{ $question->name }}</td>
+                        <td>{!! $question->name !!}</td>
                     </tr>
                     <tr>
                         <th scope="col">Course code</th>

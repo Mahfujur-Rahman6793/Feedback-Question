@@ -4,10 +4,9 @@
 
 <x-backend.master :title="$title">
 
-    <x-forms.message />
-
     <x-pages.title :links="['dashboard' => __('Dashboard'), $title]" :title="$title" />
 
+    <x-forms.message />
     <div class="row text-end my-3">
         <div>
             <a class="btn btn-sm btn-primary" href="{{ route('questions.create') }}">Create new question</a>
@@ -21,7 +20,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Question</th>
+                        {{-- <th scope="col">Question</th> --}}
                         <th scope="col">Course</th>
                         <th scope="col">Type</th>
                         <th scope="col">Marks</th>
@@ -32,7 +31,7 @@
                     @forelse ($questions as $question)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ \Illuminate\Support\Str::limit($question->name, 30, '...') }}</td>
+                        {{-- <td>{{ \Illuminate\Support\Str::limit($question->name, 30, '...') }}</td> --}}
                         <td>{{ $question->course->code . ' (' . $question->course->title . ')' }}</td>
                         <td>{{ $question->questionType->type }}</td>
                         <td>{{ $question->marks }}</td>
