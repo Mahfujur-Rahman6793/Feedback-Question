@@ -4,9 +4,8 @@
 @endphp
 <x-backend.master :title="$title">
 
-    <x-forms.message />
-
     <x-pages.title :links="[$title]" :title="$title" />
+    <x-forms.message />
 
     <section class="section dashboard">
         <div class="row">

@@ -4,9 +4,8 @@
 
 <x-backend.master :title="$title">
 
-    <x-forms.message />
-
     <x-pages.title :links="['dashboard' => __('Dashboard'), $title]" :title="$title" />
+    <x-forms.message />
 
     <div class="card">
         <div class="card-body">
