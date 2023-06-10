@@ -88,6 +88,6 @@ class AssignedCourseController extends Controller
     public function destroy(User $user, $course)
     {
         $user->courses()->detach($course);
-        return redirect()->route('assigned_courses.show')->withMessage('Course removed for teacher successfully');
+        return redirect()->route('assigned_courses.show', $user->id)->withMessage('Course removed for teacher successfully');
     }
 }
