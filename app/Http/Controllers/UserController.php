@@ -19,11 +19,15 @@ class UserController extends Controller
         $user = auth()->user();
         $users = User::query();
         if ($user->isChairman()) {
-            $users->where('role_id', 3); // Get only teachers
+            $users->where('role_id', User::TYPE_TEACHER); // Get only teachers
         } else if ($user->isAdmin()) {
-            $users->where('role_id', 2); // Get only chairmans
+            $users->where('role_id', User::TYPE_CHAIRMAN); // Get only chairmans
         }
-        $users = $users->where('id', '!=', auth()->id())->where('role_id', '!=', 4)->with(['role', 'department'])->latest()->paginate(15);
+
+        $users = $users->where('id', '!=', auth()->id())
+                        ->where('role_id', '!=', User::TYPE_STUDENT)
+                        ->where('department_id', $user->department_id)
+                        ->with(['role', 'department'])->latest()->paginate(15);
         return view('backend.users.index', compact('users'));
     }
 
