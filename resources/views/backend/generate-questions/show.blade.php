@@ -51,7 +51,7 @@
                         </td>
                         @else
                         <td>
-                            {{ $q['question'] }}
+                            {!! $q['question'] !!}
                         </td>
                         <td>
                             {{ $q['marks'] }}
