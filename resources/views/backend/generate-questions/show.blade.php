@@ -18,18 +18,27 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title"></h5>
-            <h5>Course: {{ $question->course->code . " ({$question->course->title})" }}</h5>
-            <h5>Total Marks: {{ $question->total_marks }}</h5>
-            <h5>Total Questions: {{ $question->total_questions }}</h5>
-            <h5>Duration: {{ $question->duration }} Minutes</h5>
-            <table class="table table-hover">
-                <thead>
+            <div class="row">
+                <h4 class="text-center">{{ $question->course->department->name }}</h4>
+                <h4 class="text-center">Noakhali Science and Technology University</h4>
+                <div class="col-md-6 mt-3">
+                    <h5>Course Code: {{ $question->course->code }}</h5>
+                    <h5>Course Title: {{ $question->course->title }}</h5>
+                </div>
+                <div class="col-md-6 text-end mt-3">
+                    <h5>Total Marks: {{ $question->total_marks }}</h5>
+                    <h5>Duration: {{ $question->duration }} Minutes</h5>
+                </div>
+            </div>
+            {{-- <h5>Total Questions: {{ $question->total_questions }}</h5> --}}
+            <table class="table table-responsive table-bordered mt-4">
+                {{-- <thead>
                     <tr>
                         <th>#</th>
                         <th>Question</th>
                         <th width="100px">Marks</th>
                     </tr>
-                </thead>
+                </thead> --}}
                 <tbody>
                     @foreach ($question->questions as $q)
                     <tr>
@@ -37,11 +46,11 @@
                         {{-- <td>{{ $q['type'] }}</td> --}}
                         @if ($q['has_sub_questions'])
                         <td colspan="2">
-                            <table class="table table-responsive">
+                            <table class="table table-responsive table-borderless">
                                 <tbody>
                                     @foreach ($q['sub_questions'] as $sub)
                                     <tr>
-                                        <td>{{ chr($loop->iteration + 96) }}</td>
+                                        <td width="20px">{{ chr($loop->iteration + 96) }}</td>
                                         <td>{!! $sub['question'] !!}</td>
                                         <td width="100px">{{ $sub['marks'] }}</td>
                                     </tr>
