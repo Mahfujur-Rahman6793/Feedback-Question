@@ -35,6 +35,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Course</th>
                         <th scope="col">Average Rating</th>
+                        @if (auth()->user()->isChairman()) <th scope="col">Comment</th> @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -43,6 +44,15 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $feedback->course->code . " ({$feedback->course->title})" }}</td>
                         <td>{{ $scaleLabels[intval($feedback->rating)] }}</td>
+                        @if (auth()->user()->isChairman())
+                        <td>
+                            <ol>
+                                @foreach ($comments[$feedback->course_id] as $c)
+                                <li>{{ $c }}</li>
+                                @endforeach
+                            </ol>
+                        </td>
+                        @endif
                     </tr>
                     @empty
                     <tr>

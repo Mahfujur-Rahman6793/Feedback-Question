@@ -111,7 +111,15 @@ class FeedbackController extends Controller
                         ->where('users.id', $user->id)
                         ->groupBy('feedback.course_id', 'courses.code', 'courses.title')
                         ->latest('feedback.created_at')->get();
-        return view('backend.feedbacks.show', compact('feedbacks', 'teacher_name', 'total_rating'));
+        $course_comments = Feedback::where('user_id', $user->id)->latest('feedback.created_at')->get();
+        $comments = [];
+        foreach ($course_comments as $c) {
+            if (!array_key_exists($c->course_id, $comments)) {
+                $comments[$c->course_id] = [];
+            }
+            $comments[$c->course_id][] = $c->comment;
+        }
+        return view('backend.feedbacks.show', compact('feedbacks', 'teacher_name', 'total_rating', 'comments'));
     }
 
     /**
