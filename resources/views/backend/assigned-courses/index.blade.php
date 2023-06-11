@@ -16,7 +16,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Teacher</th>
                         <th scope="col">Courses</th>
-                        <th scope="col" width="190">Action</th>
+                        <th scope="col" width="220">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,6 +27,9 @@
                         <td>{{ implode(', ' ,$teacher->courses()->pluck('code')->toArray()) }}</td>
                         <td>
                             <a class="btn btn-sm btn-info" href="{{ route('assigned_courses.show', $teacher->id) }}">View</a>
+                            @if (auth()->user()->isChairman())
+                            <a class="btn btn-sm btn-primary" href="{{ route('assigned_courses.create', $teacher->id) }}">Add Course</a>
+                            @endif
                         </td>
                     </tr>
                     @empty
