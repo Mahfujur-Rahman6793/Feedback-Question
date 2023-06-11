@@ -28,7 +28,12 @@ class AssignedCourseController extends Controller
      */
     public function create(User $user)
     {
-        $courses = Course::pluck('code', 'id')->toArray();
+        $courses = Course::all();
+        $temp = [];
+        foreach ($courses as $course) {
+            $temp[$course->id] = $course->code . " ({$course->title})";
+        }
+        $courses = $temp;
         return view('backend.assigned-courses.create', compact('user', 'courses'));
     }
 
