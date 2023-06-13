@@ -7,13 +7,13 @@
     <x-pages.title :links="['dashboard' => __('Dashboard'), $title]" :title="$title" />
     <x-forms.message />
 
-    {{-- <div class="row text-end my-3">
+    <div class="row text-end my-3">
         <div>
             <a class="btn btn-sm btn-primary" href="{{ route('questions.index') }}">List</a>
-            <a class="btn btn-sm btn-warning" href="{{ route('questions.edit', $question->id) }}">Edit</a>
+            <a class="btn btn-sm btn-info" href="{{ route('generate-questions.pdf', $question->id) }}">Get PDF</a>
             <x-pages.actionDelete :link="route('questions.destroy', $question->id)" />
         </div>
-    </div> --}}
+    </div>
 
     <div class="card">
         <div class="card-body">
@@ -31,7 +31,7 @@
                 </div>
             </div>
             {{-- <h5>Total Questions: {{ $question->total_questions }}</h5> --}}
-            <table class="table table-responsive table-bordered mt-4">
+            <table class="table table-bordered mt-4">
                 {{-- <thead>
                     <tr>
                         <th>#</th>
@@ -52,7 +52,7 @@
                                     <tr>
                                         <td width="20px">{{ chr($loop->iteration + 96) }}</td>
                                         <td>{!! $sub['question'] !!}</td>
-                                        <td width="100px">{{ $sub['marks'] }}</td>
+                                        <td width="50px">{{ $sub['marks'] }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -62,7 +62,7 @@
                         <td>
                             {!! $q['question'] !!}
                         </td>
-                        <td>
+                        <td width="60px" class="pe-2">
                             {{ $q['marks'] }}
                         </td>
                         @endif

@@ -68,7 +68,7 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::middleware(['role:teacher'])->group(function() {
         Route::resource('questions', QuestionController::class);
         Route::resource('generate-questions', GenerateQuestionController::class);
-        Route::post('generate-questions/{generate_question}/pdf', [GenerateQuestionController::class, 'pdf'])->name('generate-questions.pdf');
+        Route::get('generate-questions/{question}/pdf', [GenerateQuestionController::class, 'pdf'])->name('generate-questions.pdf');
         Route::get('random', [GenerateQuestionController::class, 'random'])->name('generate.random');
     });
 

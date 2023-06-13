@@ -9,6 +9,7 @@ use App\Models\GenerateQuestion;
 use App\Models\Question;
 use App\Models\QuestionType;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class GenerateQuestionController extends Controller
 {
@@ -136,9 +137,13 @@ class GenerateQuestionController extends Controller
         return redirect()->route('generate-questions.index')->withMessage('Deleted successfully');
     }
 
-    public function pdf()
+    public function pdf(GenerateQuestion $question)
     {
-        return "GET PDF";
+        $questionTypes = QuestionType::pluck('type', 'id')->toArray();
+        $courseCode = $question->course->code;
+        // return view('backend.generate-questions.pdf', compact('question', 'questionTypes'));
+        $pdf = Pdf::loadView('backend.generate-questions.pdf', compact('question', 'questionTypes'));
+        return $pdf->download($courseCode . '.pdf');
     }
 
     public function random(Request $request)

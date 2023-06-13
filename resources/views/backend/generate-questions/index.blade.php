@@ -37,9 +37,11 @@
                         <td>{{ $question->total_questions }}</td>
                         <td>
                             @if (auth()->user()->isTeacher())
-                            <a class="btn btn-sm btn-info" href="{{ route('generate-questions.show', $question->id) }}">View</a>
                             @if ($question->questions == null)
                             <a class="btn btn-sm btn-warning" href="{{ route('generate-questions.edit', $question->id) }}">Continue Generating</a>
+                            @else
+                            <a class="btn btn-sm btn-info" href="{{ route('generate-questions.show', $question->id) }}">View</a>
+                            <a class="btn btn-sm btn-info" href="{{ route('generate-questions.pdf', $question->id) }}">Get PDF</a>
                             @endif
                             <x-pages.actionDelete :link="route('generate-questions.destroy', $question->id)" />
                             @endif
