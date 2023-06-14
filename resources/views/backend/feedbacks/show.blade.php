@@ -44,7 +44,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $feedback->course->code . " ({$feedback->course->title})" }}</td>
                         <td>{{ $scaleLabels[intval($feedback->rating)] }}</td>
-                        @if (auth()->user()->isChairman())
+                        @if (auth()->user()->isChairman() && $feedback->user_id != auth()->id())
                         <td>
                             <ol>
                                 @foreach ($comments[$feedback->course_id] as $c)
