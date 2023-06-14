@@ -64,17 +64,18 @@ Route::middleware(['auth', 'verified'])->group(function() {
         Route::delete('assigned-courses/{user}/courses/{course}', [AssignedCourseController::class, 'destroy'])->name('assigned_courses.destroy');
     });
 
-    // Question
     Route::middleware(['role:teacher'])->group(function() {
+    });
+
+    Route::middleware(['role:chairman,teacher'])->group(function() {
+        // Feedback
+        Route::get('/feedbacks', [FeedbackController::class, 'index'])->name('feedbacks.index');
+
+        // Question
         Route::resource('questions', QuestionController::class);
         Route::resource('generate-questions', GenerateQuestionController::class);
         Route::get('generate-questions/{question}/pdf', [GenerateQuestionController::class, 'pdf'])->name('generate-questions.pdf');
         Route::get('random', [GenerateQuestionController::class, 'random'])->name('generate.random');
-    });
-
-    // Feedback
-    Route::middleware(['role:chairman,teacher'])->group(function() {
-        Route::get('/feedbacks', [FeedbackController::class, 'index'])->name('feedbacks.index');
     });
 
 });

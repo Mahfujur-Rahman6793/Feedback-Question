@@ -24,7 +24,7 @@
             <div class="col-lg-12">
                 <div class="row">
 
-                    @if ($user->isTeacher())
+                    @if ($user->isTeacher() || $user->isChairman())
                     <div class="col-xxl-3 col-md-6">
                         <div class="card info-card sales-card">
                             <div class="card-body">

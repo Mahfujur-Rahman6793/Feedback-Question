@@ -15,8 +15,11 @@ class AssignedCourseController extends Controller
      */
     public function index()
     {
-        $assigned_courses = User::where('role_id', User::TYPE_TEACHER)
-                                ->where('department_id', auth()->user()->department_id)
+        $assigned_courses = User::where('department_id', auth()->user()->department_id)
+                                ->whereNotNull('approved_at')
+                                ->whereHas('role', function($q) {
+                                    $q->where('id', User::TYPE_TEACHER)->orWhere('id', User::TYPE_CHAIRMAN);
+                                })
                                 ->with('courses')->latest()->paginate(20);
         return view('backend.assigned-courses.index', compact('assigned_courses'));
     }

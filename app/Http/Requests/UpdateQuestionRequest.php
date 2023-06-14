@@ -13,7 +13,7 @@ class UpdateQuestionRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->isTeacher();
+        return auth()->user()->isTeacher() || auth()->user()->isChairman();
     }
 
     /**

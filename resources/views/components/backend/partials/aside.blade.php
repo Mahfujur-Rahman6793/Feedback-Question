@@ -44,7 +44,7 @@
         </li><!-- End user menu -->
         @endif
 
-        @if ($user->isTeacher() && $user->approved_at)
+        @if (($user->isChairman() || $user->isTeacher()) && $user->approved_at)
         @php
             $isQuestion = false;
             if (!empty($title)) {

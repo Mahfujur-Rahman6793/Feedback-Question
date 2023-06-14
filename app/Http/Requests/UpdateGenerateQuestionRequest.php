@@ -13,7 +13,7 @@ class UpdateGenerateQuestionRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->isTeacher() || auth()->user()->isChairman();
     }
 
     /**

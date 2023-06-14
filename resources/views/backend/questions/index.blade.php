@@ -36,7 +36,7 @@
                         <td>{{ $question->questionType->type }}</td>
                         <td>{{ $question->marks }}</td>
                         <td>
-                            @if (auth()->user()->isTeacher())
+                            @if (auth()->user()->isTeacher() || auth()->user()->isChairman())
                             <a class="btn btn-sm btn-info" href="{{ route('questions.show', $question->id) }}">View</a>
                             <a class="btn btn-sm btn-warning" href="{{ route('questions.edit', $question->id) }}">Edit</a>
                             <x-pages.actionDelete :link="route('questions.destroy', $question->id)" />

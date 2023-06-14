@@ -10,8 +10,10 @@
     <div class="row text-end my-3">
         <div>
             <a class="btn btn-sm btn-primary" href="{{ route('questions.index') }}">List</a>
+            @if (auth()->user()->isTeacher() || auth()->user()->isChairman())
             <a class="btn btn-sm btn-warning" href="{{ route('questions.edit', $question->id) }}">Edit</a>
             <x-pages.actionDelete :link="route('questions.destroy', $question->id)" />
+            @endif
         </div>
     </div>
 

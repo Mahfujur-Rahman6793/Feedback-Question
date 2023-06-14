@@ -36,7 +36,7 @@
                         <td>{{ $question->total_marks }}</td>
                         <td>{{ $question->total_questions }}</td>
                         <td>
-                            @if (auth()->user()->isTeacher())
+                            @if (auth()->user()->isTeacher() || auth()->user()->isChairman())
                             @if ($question->questions == null)
                             <a class="btn btn-sm btn-warning" href="{{ route('generate-questions.edit', $question->id) }}">Continue Generating</a>
                             @else

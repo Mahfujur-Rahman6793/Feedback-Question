@@ -18,7 +18,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th width="20px">#</th>
                             <th>Data</th>
                         </tr>
                     </thead>
@@ -34,11 +34,11 @@
                                     <div class="col-md-4 d-flex align-items-center">
                                         <button type="button" class="btn btn-sm btn-info d-none" id="btnQuestion_{{ $i }}" data-index="{{ $i }}">Get question</button>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-12 mt-3">
                                         <input type="hidden" name="question[]" id="question_{{ $i }}Input" required>
                                         <p class="d-none" id="question_{{ $i }}"></p>
                                     </div>
-                                    <div class="col-12" id="sub_question_{{ $i }}">
+                                    <div class="col-12 mt-2" id="sub_question_{{ $i }}">
 
                                     </div>
                                 </div>

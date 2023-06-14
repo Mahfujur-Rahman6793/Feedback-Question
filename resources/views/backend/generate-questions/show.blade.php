@@ -10,8 +10,10 @@
     <div class="row text-end my-3">
         <div>
             <a class="btn btn-sm btn-primary" href="{{ route('questions.index') }}">List</a>
+            @if (auth()->user()->isTeacher() || auth()->user()->isChairman())
             <a class="btn btn-sm btn-info" href="{{ route('generate-questions.pdf', $question->id) }}">Get PDF</a>
             <x-pages.actionDelete :link="route('questions.destroy', $question->id)" />
+            @endif
         </div>
     </div>
 
@@ -29,8 +31,8 @@
                     <h5>Total Marks: {{ $question->total_marks }}</h5>
                     <h5>Duration: {{ $question->duration }} Minutes</h5>
                 </div>
+                <h5 class="text-center">{{ $question->description }}</h5>
             </div>
-            {{-- <h5>Total Questions: {{ $question->total_questions }}</h5> --}}
             <table class="table table-bordered mt-4">
                 {{-- <thead>
                     <tr>
@@ -42,7 +44,7 @@
                 <tbody>
                     @foreach ($question->questions as $q)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td width="50px">{{ $loop->iteration }}</td>
                         {{-- <td>{{ $q['type'] }}</td> --}}
                         @if ($q['has_sub_questions'])
                         <td colspan="2">
