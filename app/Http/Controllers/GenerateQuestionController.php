@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGenerateQuestionRequest;
 use App\Http\Requests\UpdateGenerateQuestionRequest;
-use App\Models\Course;
 use App\Models\GenerateQuestion;
 use App\Models\Question;
 use App\Models\QuestionType;
@@ -20,7 +19,7 @@ class GenerateQuestionController extends Controller
      */
     public function index()
     {
-        $questions = GenerateQuestion::latest()->with('course')->paginate(20);
+        $questions = GenerateQuestion::where('user_id', auth()->id())->latest()->with('course')->paginate(20);
         return view('backend.generate-questions.index', compact('questions'));
     }
 
