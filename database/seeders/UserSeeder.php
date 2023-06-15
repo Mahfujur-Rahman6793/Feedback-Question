@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
         $users = [
             'admin@gmail.com' => ['Admin', 1, 1],
             'chairman@gmail.com' => ['Chairman', 2, 1],
+            'dipok.iit@nstu.edu.bd' => ['Dipok Chandra Das', 3, 33],
             'teacher@gmail.com' => ['Teacher', 3, 1],
             'teacher2@gmail.com' => ['Teacher 2', 3, 2],
             'teacher3@gmail.com' => ['Teacher 3', 3, 3],
@@ -26,7 +27,6 @@ class UserSeeder extends Seeder
             'student3@gmail.com' => ['Student 3', 4, 3],
             'student4@gmail.com' => ['Student 4', 4, 4],
             'mahfujur2513@student.nstu.edu.bd' => ['Mahfujur Rahman', 4, 33],
-            'dipok.iit@nstu.edu.bd' => ['Dipok Chandra Das', 3, 33],
             'pharmasalim@nstu.edu.bd' => ['Dr. Mohammad Salim Hossain', 2, 33],
         ];
 
