@@ -19,7 +19,7 @@ class CourseSeeder extends Seeder
         // Random courses
         // Course::factory(100)->create();
 
-        $dept_se_id = Department::where('short_name')->first()?->id;
+        $dept_se_id = Department::where('short_name', 'SE')->first()?->id;
         if ($dept_se_id) {
             $courses = [
                 'CSE1101' => ['Structured Programming', 1],
