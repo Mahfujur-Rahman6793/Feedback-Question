@@ -94,7 +94,7 @@ th {
                                     @foreach ($q['sub_questions'] as $sub)
                                         <tr>
                                             <td width="20px" style="padding: 10px 10px; text-align: center; vertical-align: top;">{{ chr($loop->iteration + 96) }}</td>
-                                            <td style="padding: 10px 10px; vertical-align: center;">{!! $sub['question'] !!}</td>
+                                            <td style="padding: 10px 10px; vertical-align: top;">{!! $sub['question'] !!}</td>
                                             <td width="40px" style="padding: 10px 10px; vertical-align: top; text-align: center;">{{ $sub['marks'] }}</td>
                                         </tr>
                                     @endforeach
@@ -102,7 +102,7 @@ th {
                             </table>
                         </td>
                     @else
-                        <td style="padding: 10px 10px; vertical-align: center;">
+                        <td style="padding: 10px 10px; vertical-align: top;">
                             {!! $q['question'] !!}
                         </td>
                         <td width="50px" style="padding: 10px 10px; vertical-align: top; text-align: center;">
