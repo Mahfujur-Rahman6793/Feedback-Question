@@ -29,9 +29,12 @@
         @if ($user->isChairman() && $user->approved_at)
         @php
             $isAssignCourse = false;
+            $isCourse = false;
             if (!empty($title)) {
                 $assignTitles = ['Assigned Course List', 'View Assigned Course', 'Assign Course'];
+                $courseTitles = ['Course List', 'View Course', 'Create New Course', 'Edit Course'];
                 $isAssignCourse = in_array($title, $assignTitles);
+                $isCourse = in_array($title, $courseTitles);
             }
         @endphp
 
@@ -41,7 +44,15 @@
                 <i class="bi bi-journal-text"></i>
                 <span>Assigned Course</span>
             </a>
-        </li><!-- End user menu -->
+        </li><!-- End menu -->
+
+        <!-- Course -->
+        <li class="nav-item">
+            <a class="nav-link @if (!$isCourse) collapsed @endif" href="{{ route('courses.index') }}">
+                <i class="bi bi-journal-text"></i>
+                <span>Courses</span>
+            </a>
+        </li><!-- End menu -->
         @endif
 
         @if (($user->isChairman() || $user->isTeacher()) && $user->approved_at)

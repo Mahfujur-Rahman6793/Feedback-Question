@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AssignedCourseController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\GenerateQuestionController;
@@ -58,6 +59,9 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
 
     Route::middleware(['role:chairman'])->group(function() {
+        // Courses
+        Route::resource('courses', CourseController::class);
+
         // Feedback
         Route::get('/feedbacks/{user}', [FeedbackController::class, 'show'])->name('feedbacks.show');
 
