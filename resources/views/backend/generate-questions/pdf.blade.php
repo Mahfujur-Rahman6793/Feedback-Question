@@ -53,8 +53,24 @@ th {
 }
 </style>
 <div style="margin: 10px">
-    <h4 class="text-center">{{ $question->course->department->name }}</h4>
+    <h4 class="text-center">
+        @php
+            $deptName = $question->course->department->name;
+            if ($deptName == 'Software Engineering') {
+                $deptName = 'Institute of Information Technology (IIT)';
+            } else if ($deptName == 'Department of Information Sciences and Library Management') {
+                $deptName = 'Institute of Information Sciences (IIS)';
+            }
+        @endphp
+        {{ $deptName }}
+    </h4>
     <h4 class="text-center">Noakhali Science and Technology University</h4>
+    @if ($deptName == 'Institute of Information Technology (IIT)')
+        <h5 class="text-center">
+            Bachelor of Science in Software Engineering
+        </h5>
+    @endif
+    <h5 class="text-center">{{ $question->exam_name }}</h5>
     <table style="width: 100%;">
         <tr>
             <td>Course Code: {{ $question->course->code }}</td>

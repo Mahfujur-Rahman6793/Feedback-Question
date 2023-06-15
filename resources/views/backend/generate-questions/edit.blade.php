@@ -10,10 +10,35 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title"></h5>
-            <h5>Course: {{ $question->course->code . " ({$question->course->title})" }}</h5>
-            <h5>Total Marks: {{ $question->total_marks }}</h5>
-            <h5>Total Questions: {{ $question->total_questions }}</h5>
-            <h5>Duration: {{ $question->duration }} Minutes</h5>
+            <div class="row">
+                <h4 class="text-center">
+                    @php
+                        $deptName = $question->course->department->name;
+                        if ($deptName == 'Software Engineering') {
+                            $deptName = 'Institute of Information Technology (IIT)';
+                        } else if ($deptName == 'Department of Information Sciences and Library Management') {
+                            $deptName = 'Institute of Information Sciences (IIS)';
+                        }
+                    @endphp
+                    {{ $deptName }}
+                </h4>
+                <h5 class="text-center">Noakhali Science and Technology University</h5>
+                @if ($deptName == 'Institute of Information Technology (IIT)')
+                <h5 class="text-center">
+                    Bachelor of Science in Software Engineering
+                </h5>
+                @endif
+                <h5 class="text-center">{{ $question->exam_name }}</h5>
+                <div class="col-md-6 mt-3">
+                    <h5>Course Code: {{ $question->course->code }}</h5>
+                    <h5>Course Title: {{ $question->course->title }}</h5>
+                </div>
+                <div class="col-md-6 text-end mt-3">
+                    <h5>Total Marks: {{ $question->total_marks }}</h5>
+                    <h5>Duration: {{ $question->duration }} Minutes</h5>
+                </div>
+                <h5 class="text-center">{{ $question->description }}</h5>
+            </div>
             <x-forms.form :action="route('generate-questions.update', $question->id)" method="PATCH" class="row px-3 py-3">
                 <table class="table table-hover">
                     <thead>

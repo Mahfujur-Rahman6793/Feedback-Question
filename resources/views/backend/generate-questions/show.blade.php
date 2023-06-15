@@ -21,8 +21,24 @@
         <div class="card-body">
             <h5 class="card-title"></h5>
             <div class="row">
-                <h4 class="text-center">{{ $question->course->department->name }}</h4>
-                <h4 class="text-center">Noakhali Science and Technology University</h4>
+                <h4 class="text-center">
+                    @php
+                        $deptName = $question->course->department->name;
+                        if ($deptName == 'Software Engineering') {
+                            $deptName = 'Institute of Information Technology (IIT)';
+                        } else if ($deptName == 'Department of Information Sciences and Library Management') {
+                            $deptName = 'Institute of Information Sciences (IIS)';
+                        }
+                    @endphp
+                    {{ $deptName }}
+                </h4>
+                <h5 class="text-center">Noakhali Science and Technology University</h5>
+                @if ($deptName == 'Institute of Information Technology (IIT)')
+                <h5 class="text-center">
+                    Bachelor of Science in Software Engineering
+                </h5>
+                @endif
+                <h5 class="text-center">{{ $question->exam_name }}</h5>
                 <div class="col-md-6 mt-3">
                     <h5>Course Code: {{ $question->course->code }}</h5>
                     <h5>Course Title: {{ $question->course->title }}</h5>
