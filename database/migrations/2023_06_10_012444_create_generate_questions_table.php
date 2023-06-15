@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('total_marks')->nullable();
             $table->integer('total_questions')->nullable();
             $table->string('description')->nullable();
+            $table->string('exam_name')->nullable();
             $table->json('questions')->nullable();
 
             $table->timestamps();

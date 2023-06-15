@@ -48,6 +48,7 @@ class GenerateQuestionController extends Controller
             'total_marks' => $request->total_marks,
             'total_questions' => $request->total_questions,
             'duration' => $request->duration,
+            'exam_name' => $request->exam_name,
             'description' => $request->description,
         ]);
         return redirect()->route('generate-questions.edit', $question->id);

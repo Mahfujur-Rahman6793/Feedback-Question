@@ -22,9 +22,8 @@
                 <x-forms.input name="duration" type="number" max="300" min="10" step="5" :label="__('Enter exam duration (Minutes)')"
                     :value="old('duration')" required />
 
-                <x-forms.input name="description" type="text" :label="__('Enter exam name')" :value="old('description')" required />
-
-                {{-- <x-forms.textarea name="description" :label="__('Enter question deescription')" :value="old('description')" rows="4" placeholder="This description will show in the question header" /> --}}
+                <x-forms.input name="exam_name" type="text" :label="__('Enter exam name')" :value="old('exam_name')" required />
+                <x-forms.input name="description" type="text" :label="__('Enter question description')" :value="old('description')" placeholder="Answer 7 out of 9 questions" required />
 
                 <div class="mb-3 text-end">
                     <button type="submit" value="submit" class="btn btn-primary">{{ __('Start generating') }}</button>
