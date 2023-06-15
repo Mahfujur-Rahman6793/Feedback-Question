@@ -9,8 +9,10 @@ use App\Models\Feedback;
 use App\Models\FeedbackLog;
 use App\Models\Scale;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class FeedbackController extends Controller
 {
@@ -154,5 +156,110 @@ class FeedbackController extends Controller
     public function destroy(Feedback $feedback)
     {
         //
+    }
+
+    public function pdf()
+    {
+        return view('backend.feedbacks.generatepdf');
+    }
+
+    public function generatePdf(Request $request)
+    {
+        $request->validate([
+            'start_date' => ['date', 'required', 'before_or_equal:end_date', 'before_or_equal:today'],
+            'end_date' => ['date', 'required', 'after_or_equal:start_date', 'before_or_equal:today'],
+        ]);
+
+        $user = auth()->user();
+        $start_date_txt = $request->start_date;
+        $end_date_txt = $request->end_date;
+        $deptName = $user->department->name;
+
+        $scaleLabels = [
+            1 => 'Very bad',
+            2 => 'Bad',
+            3 => 'Average',
+            4 => 'Good',
+            5 => 'Very good',
+        ];
+        $courses = Course::where('department_id', $user->department_id)->pluck('id')->toArray();
+        $all_feedbacks = Feedback::whereBetween('created_at', [$request->start_date, $request->end_date])
+                            ->whereIn('course_id', $courses)
+                            ->with(['course', 'teacher', 'scale'])
+                            ->get();
+        $feedbacks = [];
+        /*
+        [
+            'teacher' => [
+                'courses' => [
+                    'course_code_course_title' => [
+                        'comments' => [
+                            'comment',
+                            ...
+                        ]
+                        'avg_scale' => '',
+                        'avg_rating' => '',
+                        'total_rating' => '',
+                    ],
+                    ...
+                ],
+                'avg_scale' => '',
+                'avg_rating' => '',
+                'total_rating' => '',
+            ],
+            ...
+        ]
+        */
+        foreach ($all_feedbacks as $feedback) {
+            $teacher_name = $feedback->teacher->name;
+            if (!isset($feedbacks[$teacher_name])) {
+                $feedbacks[$teacher_name] = [
+                    'courses' => [],
+                    'avg_scale' => 0,
+                    'avg_rating' => 0,
+                    'total_rating' => 0,
+                ];
+            }
+
+            $course_code_title = $feedback->course->code . " ({$feedback->course->title})";
+            if (!isset($feedbacks[$teacher_name]['courses'][$course_code_title])) {
+                $feedbacks[$teacher_name]['courses'][$course_code_title] = [
+                    'comments' => [],
+                    'avg_scale' => 0,
+                    'avg_rating' => 0,
+                    'total_rating' => 0,
+                ];
+            }
+
+            $rating = $feedback->scale->value;
+            $feedbacks[$teacher_name]['courses'][$course_code_title]['comments'][] = $feedback->comment;
+            $feedbacks[$teacher_name]['courses'][$course_code_title]['total_rating'] += $rating;
+            $feedbacks[$teacher_name]['total_rating'] += $rating;
+        }
+
+        foreach ($feedbacks as &$feedback) {
+            $course_count = 0;
+            $course_total = 0;
+            foreach ($feedback['courses'] as &$course) {
+                $comment_count = count($course['comments']);
+                $rating = intval($course['total_rating'] / $comment_count);
+                $course['avg_rating'] = $rating;
+                $course['avg_scale'] = $scaleLabels[$rating];
+
+                $course_total += $rating;
+                $course_count += 1;
+            }
+
+            $rating = intval($course_total / $course_count);
+            $feedback['total_rating'] = $course_total;
+            $feedback['avg_rating'] = $rating;
+            $feedback['avg_scale'] = $scaleLabels[$rating];
+        }
+
+        // return view('backend.feedbacks.pdf', compact('feedbacks', 'deptName', 'start_date_txt', 'end_date_txt'));
+
+        $pdf = Pdf::loadView('backend.feedbacks.pdf', compact('feedbacks', 'deptName', 'start_date_txt', 'end_date_txt'));
+        return $pdf->download("Feedback_report_{$start_date_txt}_{$end_date_txt}.pdf");
+        // return redirect()->route('feedbacks.index')->withMessage('Feedback report created successfully');
     }
 }

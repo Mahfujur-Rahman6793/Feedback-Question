@@ -47,11 +47,15 @@ Route::middleware(['auth', 'verified'])->group(function() {
         });
     });
 
+    Route::get('feedbacks/pdf', [FeedbackController::class, 'pdf'])->name('feedbacks.pdf')->middleware(['role:chairman']);
+    Route::post('/feedbacks/pdf', [FeedbackController::class, 'generatePdf'])->name('feedbacks.generate.pdf')->middleware(['role:chairman']);
+
     // Feedback
     Route::middleware(['role:student'])->group(function() {
         Route::get('/feedbacks/create', [FeedbackController::class, 'create'])->name('feedbacks.create');
         Route::post('/feedbacks', [FeedbackController::class, 'store'])->name('feedbacks.store');
     });
+
 
     Route::middleware(['role:chairman'])->group(function() {
         // Feedback

@@ -7,6 +7,12 @@
     <x-pages.title :links="['dashboard' => __('Dashboard'), $title]" :title="$title" />
     <x-forms.message />
 
+    <div class="row text-end my-3">
+        <div>
+            <a class="btn btn-sm btn-info" href="{{ route('feedbacks.pdf') }}">Get Report</a>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-body">
             <h5 class="card-title"></h5>
@@ -20,7 +26,9 @@
                         <th scope="col">Teacher</th>
                         @endif
                         <th scope="col">Average Rating</th>
+                        @if (auth()->user()->isChairman())
                         <th scope="col" width="190">Action</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -42,11 +50,11 @@
                         <td>{{ $feedback->teacher->name }}</td>
                         @endif
                         <td>{{ $scaleLabels[intval($feedback->rating)] }}</td>
+                        @if (auth()->user()->isChairman())
                         <td>
-                            @if (auth()->user()->isChairman())
                             <a class="btn btn-sm btn-info" href="{{ route('feedbacks.show', $feedback->teacher->id) }}">View</a>
-                            @endif
                         </td>
+                        @endif
                     </tr>
                     @empty
                     <tr>
