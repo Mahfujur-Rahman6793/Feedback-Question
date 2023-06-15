@@ -80,7 +80,7 @@
         @if (($user->isChairman() || $user->isTeacher()) && $user->approved_at)
         <!-- Feedback -->
         <li class="nav-item">
-            <a class="nav-link @if ($title != 'Feedback List' || $title != 'Show Feedback') collapsed @endif" href="{{ route('feedbacks.index') }}">
+            <a class="nav-link @if (!in_array($title, ['Feedback List', 'Show Feedback', 'Generate Feedback Report'])) collapsed @endif" href="{{ route('feedbacks.index') }}">
                 <i class="bi bi-question-circle"></i>
                 <span>Feedback</span>
             </a>
