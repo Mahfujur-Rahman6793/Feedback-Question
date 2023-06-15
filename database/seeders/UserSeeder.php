@@ -25,6 +25,9 @@ class UserSeeder extends Seeder
             'student2@gmail.com' => ['Student 2', 4, 2],
             'student3@gmail.com' => ['Student 3', 4, 3],
             'student4@gmail.com' => ['Student 4', 4, 4],
+            'mahfujur2513@student.nstu.edu.bd' => ['Mahfujur Rahman', 4, 33],
+            'dipok.iit@nstu.edu.bd' => ['Dipok Chandra Das', 3, 33],
+            'pharmasalim@nstu.edu.bd' => ['Dr. Mohammad Salim Hossain', 2, 33],
         ];
 
         foreach ($users as $email => $data) {
