@@ -86,26 +86,26 @@ th {
         <tbody>
             @foreach ($question->questions as $q)
                 <tr style="padding: 10px 10px; border-width: 1px">
-                    <td style="padding: 10px 10px; border-width: 1px; text-align: center; vertical-align: top;">{{ $loop->iteration }}</td>
+                    <td style="padding: 10px 10px; padding-top:15px; border-width: 1px; text-align: center; vertical-align: top;">{{ $loop->iteration }}</td>
                     @if ($q['has_sub_questions'])
                         <td colspan="2">
                             <table class="table" style="padding-top: 0px; padding-bottom: 0px; margin-bottom: 0; margin-top: 0;">
                                 <tbody>
                                     @foreach ($q['sub_questions'] as $sub)
                                         <tr>
-                                            <td width="20px" style="padding: 10px 10px; text-align: center; vertical-align: top;">{{ chr($loop->iteration + 96) }}</td>
-                                            <td style="padding: 10px 10px; vertical-align: top;">{!! $sub['question'] !!}</td>
-                                            <td width="40px" style="padding: 10px 10px; vertical-align: top; text-align: center;">{{ $sub['marks'] }}</td>
+                                            <td width="20px" style="padding: 10px 10px; padding-top:15px; text-align: center; vertical-align: top;">{{ chr($loop->iteration + 96) }}</td>
+                                            <td style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px; vertical-align: top;">{!! $sub['question'] !!}</td>
+                                            <td width="40px" style="padding: 10px 10px; padding-top:15px; vertical-align: top; text-align: center;">{{ $sub['marks'] }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </td>
                     @else
-                        <td style="padding: 10px 10px; vertical-align: top;">
+                        <td style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px; vertical-align: top;">
                             {!! $q['question'] !!}
                         </td>
-                        <td width="50px" style="padding: 10px 10px; vertical-align: top; text-align: center;">
+                        <td width="50px" style="padding: 10px 10px; padding-top:15px; vertical-align: top; text-align: center;">
                             {{ $q['marks'] }}
                         </td>
                     @endif

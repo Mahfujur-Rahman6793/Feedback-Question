@@ -67,7 +67,7 @@ class DashboardController extends Controller
             if ($user->isAdmin()) {
                 $type = User::TYPE_CHAIRMAN;
             }
-
+// Leatest request show
             $requests = User::whereNull('approved_at')->where('role_id', $type)->with(['department', 'role'])->latest()->take(5)->get();
         }
 

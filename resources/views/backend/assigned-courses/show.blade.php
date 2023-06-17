@@ -28,7 +28,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($user->courses()->get() as $course)
+                    <!-- relation with user table + courses -->
+                    @forelse ($user->courses()->get() as $course)  
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $course->code }}</td>

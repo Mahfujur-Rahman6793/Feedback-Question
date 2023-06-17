@@ -50,6 +50,7 @@ class FeedbackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // Select teacher, course and scale
     public function create()
     {
         $scales = Scale::pluck('title', 'id')->toArray();
@@ -115,6 +116,7 @@ class FeedbackController extends Controller
                         ->latest('feedback.created_at')->get();
         $course_comments = Feedback::where('user_id', $user->id)->latest('feedback.created_at')->get();
         $comments = [];
+        // Add comment for specific course
         foreach ($course_comments as $c) {
             if (!array_key_exists($c->course_id, $comments)) {
                 $comments[$c->course_id] = [];
@@ -165,6 +167,7 @@ class FeedbackController extends Controller
 
     public function generatePdf(Request $request)
     {
+        // range of get report
         $request->validate([
             'start_date' => ['date', 'required', 'before_or_equal:end_date', 'before_or_equal:today'],
             'end_date' => ['date', 'required', 'after_or_equal:start_date', 'before_or_equal:today'],
