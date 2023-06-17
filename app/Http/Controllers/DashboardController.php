@@ -35,8 +35,10 @@ class DashboardController extends Controller
             5 => 'Very good',
         ];
 
-        if ($user->isTeacher()) {
-            $questions = Question::select('question_type_id', DB::raw('COUNT(*) as total'))->groupBy('question_type_id')->get();
+        if ($user->isTeacher() || $user->isChairman()) {
+            $questions = Question::select('question_type_id', DB::raw('COUNT(*) as total'))
+                                ->where('user_id', auth()->id())
+                                ->groupBy('question_type_id')->get();
             foreach ($questions as $question) {
                 if ($question->question_type_id == 1) { // Chapter
                     $chapter_question = $question->total;
@@ -47,10 +49,10 @@ class DashboardController extends Controller
             $total_question = $chapter_question + $scenario_question;
 
             $feedback = Feedback::select('feedback.course_id', DB::raw('AVG(scales.value) as rating'))
-                            ->join('users', 'feedback.user_id', '=', 'users.id')
+                            // ->join('users', 'feedback.user_id', '=', 'users.id')
                             ->join('scales', 'feedback.scale_id', '=', 'scales.id')
                             ->join('courses', 'feedback.course_id', '=', 'courses.id')
-                            ->where('users.id', auth()->id())
+                            ->where('user_id', auth()->id())
                             ->groupBy('feedback.course_id')->first()?->rating ?? 0;
             $teacher_rating = $scaleLabels[intval($feedback)];
         } else if ($user->isAdmin()) {

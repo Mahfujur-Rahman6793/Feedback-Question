@@ -36,9 +36,12 @@ class FeedbackController extends Controller
             $feedbacks = Feedback::select('feedback.user_id', DB::raw('AVG(scales.value) as rating'))
                         ->join('users', 'feedback.user_id', '=', 'users.id')
                         ->join('scales', 'feedback.scale_id', '=', 'scales.id')
-                        ->join('courses', 'feedback.course_id', '=', 'courses.id')
+                        // ->join('courses', 'feedback.course_id', '=', 'courses.id')
                         ->where('users.department_id', auth()->user()->department_id)
-                        ->where('users.role_id', User::TYPE_TEACHER)
+                        ->whereHas('teacher', function($q) {
+                            $q->where('role_id', User::TYPE_TEACHER)
+                                ->orWhere('role_id', User::TYPE_CHAIRMAN);
+                        })
                         ->groupBy('feedback.user_id')
                         ->latest('feedback.created_at')->paginate(20);
         }
@@ -54,9 +57,19 @@ class FeedbackController extends Controller
     public function create()
     {
         $scales = Scale::pluck('title', 'id')->toArray();
-        $teachers = User::where('role_id', User::TYPE_TEACHER)->where('department_id', auth()->user()->department_id)->whereNotNull('approved_at')->pluck('name', 'id')->toArray();
-        $courses = Course::where('department_id', auth()->user()->department_id)->orderBy('title')->pluck('title', 'id')->toArray();
-        return view('backend.feedbacks.create', compact('scales', 'teachers', 'courses'));
+        // $teachers = User::where('role_id', User::TYPE_TEACHER)->where('department_id', auth()->user()->department_id)->whereNotNull('approved_at')->pluck('name', 'id')->toArray();
+        $courses = Course::where('department_id', auth()->user()->department_id)->orderBy('title')->get();
+
+        $data = [];
+        $temp = [];
+        foreach ($courses as $course) {
+            $data[$course->id] = $course->teachers()->pluck('name', 'id')->toArray();
+            $temp[$course->id] = $course->code . " ({$course->title})";
+        }
+
+        $courses = $temp;
+
+        return view('backend.feedbacks.create', compact('scales', 'data', 'courses'));
     }
 
     /**
@@ -106,7 +119,7 @@ class FeedbackController extends Controller
                         ->where('users.id', $user->id)
                         ->groupBy('feedback.user_id')->first()?->rating ?? 'N/A';
 
-        $teacher_name = $user->name;
+        $teacher = $user;
         $feedbacks = Feedback::select('feedback.course_id', 'courses.code', 'courses.title', DB::raw('AVG(scales.value) as rating'))
                         ->join('users', 'feedback.user_id', '=', 'users.id')
                         ->join('scales', 'feedback.scale_id', '=', 'scales.id')
@@ -123,7 +136,7 @@ class FeedbackController extends Controller
             }
             $comments[$c->course_id][] = $c->comment;
         }
-        return view('backend.feedbacks.show', compact('feedbacks', 'teacher_name', 'total_rating', 'comments'));
+        return view('backend.feedbacks.show', compact('feedbacks', 'teacher', 'total_rating', 'comments'));
     }
 
     /**

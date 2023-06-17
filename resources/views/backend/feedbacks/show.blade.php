@@ -26,7 +26,7 @@
                 ];
             @endphp
             <div class="row">
-                <h5>Teacher name: {{ $teacher_name }}</h5>
+                <h5>Teacher name: {{ $teacher->name }}</h5>
                 <h5>Total rating: {{ $scaleLabels[intval($total_rating)] }}</h5>
             </div>
             <table class="table table-hover">
@@ -44,7 +44,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $feedback->course->code . " ({$feedback->course->title})" }}</td>
                         <td>{{ $scaleLabels[intval($feedback->rating)] }}</td>
-                        @if (auth()->user()->isChairman() && $feedback->user_id != auth()->id())
+                        @if (auth()->user()->isChairman() && $teacher->id != auth()->id())
                         <td>
                             <ol>
                                 @foreach ($comments[$feedback->course_id] as $c)
