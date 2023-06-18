@@ -199,7 +199,9 @@ class FeedbackController extends Controller
             5 => 'Very good',
         ];
         $courses = Course::where('department_id', $user->department_id)->pluck('id')->toArray();
-        $all_feedbacks = Feedback::whereBetween('created_at', [$request->start_date, $request->end_date])
+        $all_feedbacks = Feedback::whereDate('created_at', ">=", $request->start_date)
+                            ->whereDate('created_at', "<=", $request->end_date)
+        // whereBetween('created_at', [$request->start_date, $request->end_date])
                             ->whereIn('course_id', $courses)
                             ->with(['course', 'teacher', 'scale'])
                             ->get();
